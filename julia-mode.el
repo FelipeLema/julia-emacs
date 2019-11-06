@@ -1,3 +1,4 @@
+;;; WIP: parenthesis indentation (see https://github.com/JuliaEditorSupport/julia-emacs/issues/11)
 ;;; julia-mode.el --- Major mode for editing Julia source code
 
 ;; Copyright (C) 2009-2014 Julia contributors
