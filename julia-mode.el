@@ -286,6 +286,25 @@
    (list julia-type-annotation-regex 1 'font-lock-type-face)
    (list julia-subtype-regex 1 'font-lock-type-face)))
 
+;;;; SMIE support
+(defconst julia-smie-grammar
+  (smie-prec2->grammar
+   (smie-bnf->prec2
+    `((expression) ;; constant or a named variable
+      )))
+  "
+Based on https://github.com/tree-sitter/tree-sitter-julia/blob/master/src/grammar.json")
+
+(defun julia-smie-backward-token ()
+  (error "WIP"))
+
+(defun julia-smie-forward-token ()
+  (error "WIP"))
+
+(defun julia-smie-rules (kind token)
+  (error "WIP"))
+
+
 (defconst julia-block-start-keywords
   (list "if" "while" "for" "begin" "try" "function" "let" "macro"
         "quote" "do" "module" "baremodule"
@@ -746,6 +765,10 @@ Return nil if point is not in a function, otherwise point."
   :group 'julia
   (set-syntax-table julia-mode-syntax-table)
   (setq-local comment-start "# ")
+  (smie-setup julia-smie-grammar
+              #'julia-smie-rules
+              :forward-token #'julia-smie-forward-token
+              :backward-token #'julia-smie-backward-token)
   (setq-local comment-start-skip "#+\\s-*")
   (setq-local font-lock-defaults '(julia-font-lock-keywords))
   (setq-local syntax-propertize-function julia-syntax-propertize-function)
